@@ -39,16 +39,6 @@ class ViewController: UIViewController {
     var tableView: UITableView!
     let repoCellIP = "repoCellIP"
     
-    // search repositories key word
-    var keyWord: String = "" {
-        didSet {
-            // will execute search only if keyword is not empty and keyword has a different value
-            if ( keyWord != oldValue && !keyWord.isEmpty ) {
-                print(keyWord)
-            }
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -64,12 +54,20 @@ class ViewController: UIViewController {
     fileprivate func setupView() {
         view.backgroundColor = .white
         
-        // Setting up the navigation bar
+        // Setup the search controller
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "Search repositeries..."
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        // Setup the navigation bar
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Repositories"
-        navigationItem.searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
         navigationItem.searchController?.searchBar.delegate = self
         navigationItem.hidesSearchBarWhenScrolling = false
+        
+        definesPresentationContext = true
     }
 
     fileprivate func prepareView() {
@@ -105,6 +103,6 @@ class ViewController: UIViewController {
 // UISearchBarDelegate stuff
 extension ViewController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        keyWord = searchBar.text ?? ""
+        // ToDo -will fill this method later
     }
 }
